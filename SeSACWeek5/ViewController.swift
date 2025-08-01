@@ -30,8 +30,65 @@ class ViewController: UIViewController {
         //concurrentAsync()
         //concurrentSync()
         //globalQualityOfServie()
-        test()
+        //test()
+        
+        
+        dispatchGruopA()
+        
+        
     }
+    
+    //DispatchGruop:두가지 방식이 존재
+    func dispatchGruopA() {
+        
+        //1번 방법 : 그룹으로 묶는다.
+        //동기메서드에 적합: 왜냐면 알바생이 하청(또 다른알바생)을 줄 수도 있어서 그럼 그 하청 알바생을 관리할 수 없어서 마지막 타이밍을 잡기 어려움: 네트워크통신에는 안쓰는게 좋아서 방법2인 B를 사용
+        //알바생들을 하나의 그룸으로 합쳐 : 애들이 일이 끝나면 신호를 보내
+        let group = DispatchGroup()
+        
+        print("AAAAAAAAA")
+        DispatchQueue.global().async(group: group) {
+            for i in 1...50 {
+                print(i)
+            }
+        }
+        print("BBBBBBBBBB")
+        DispatchQueue.global().async(group: group) {
+            for i in 51...100 {
+                print(i)
+            }
+        }
+        print("CCCCCCCC")
+        DispatchQueue.global().async(group: group) {
+            
+             for i in 101...150 {
+                 print(i)
+             }
+        }
+        print("DDDDDDDD")
+        DispatchQueue.global().async(group: group) {
+            for i in 151...200 {
+                print(i)
+            }
+           
+        }
+        print("EEEEEEEEE")
+
+        //모든 알바생이 끝났다고 신호를 보내면 이 신호를 어떤 알바생에게 전달할까? : 보통 메인알바생(닭벼슬)에게 알려줌
+        group.notify(queue: .main) { //가장 마지막에 실행되니까 여기서 테이블뷰를 갱신같은 것을 함
+            print("끝났습니다!")
+        }
+       
+        
+    }
+    
+    //2번 방법: 
+    func dispatchGruopB() {
+        
+    }
+    
+    
+    
     
     func test() {
         
@@ -261,6 +318,8 @@ class ViewController: UIViewController {
         
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
+            
+            
             
             //showAlert(title: "상품을 좋아요에 등록할까요", message: "만족스러우신가요?", ok: "저장", vc: self)
             //
