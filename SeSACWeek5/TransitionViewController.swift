@@ -9,6 +9,25 @@ import UIKit
 import SnapKit
 
 
+
+class Mobile {
+    let name: String
+    init(name: String) {
+        self.name = name
+    }
+}
+
+class Google: Mobile {
+    
+}
+class Apple: Mobile {
+    
+    let wwdc = "wwdc25"
+}
+
+
+
+
 protocol DatePassProtocol {
     func getRandomNum(a: Int)
 }
@@ -24,7 +43,7 @@ class TransitionViewController: UIViewController {
         setupUI()
         setupConstraints()
         
-        
+        idTest()
         
         //포스트(와이파이같은놈)로 보내는걸 받겠다
         NotificationCenter.default.addObserver(
@@ -34,7 +53,48 @@ class TransitionViewController: UIViewController {
             object: nil)
         
         
+        test()
+        
     }
+    
+    
+    //as에 대해 자세히 알아보자
+    //타입캐스팅
+    func test() {
+        
+        //타입을 부모클래스로 바꿔보자 : 부모타입으로 구성을 하면 애플이 가진 wwdc는 호출을 못해(wwdc는 부모에는 들어 있지 않아서: 모바일 타입으로 지정해줘서): 그럼 이럴땐 wwdc를 어떻게 가져오나 부모클래스를 자식클래스로 한단계 다운시켜줘야 하는데 이를 다운캐스팅이라 한다.
+        let mobile = Mobile(name: "모바일")
+        let google: Mobile = Google(name: "구글") //Mobile(부모)를 상속받고 있기 때문에
+        let apple: Mobile = Apple(name: "애플")
+        
+        mobile.name
+        google.name
+        apple.name
+        //apple.wwdc
+        
+        //let value = apple as! Apple //100런타임 이슈: 원래 무조건 다운캐스팅된다고 해버리면 안됨 : 여태 셀에서 다운캐스팅을 사용했던것 :  접근가능하게 하려고 : 이건 확실히 가능한거라 as!로 썼던것.
+        if let value = apple as? Apple { //애플로 다운캐스팅이 가능한지 체크하고: 가능하다면 wwdc를 갖다 쓸 수 있게 됨
+            value.wwdc
+        }
+       
+        
+        
+        
+        var array: [Any] = [1, 2, true, 4, "고래밥"]
+        
+        //let result = array[0] + array[1] //Any라 에러: 타입캐스팅으로 해결해보자
+        if let first = array[0] as? Int, let second = array[1] as? Int { // Int로 떨어질 수 있는 환경인지 확인
+            print(first + second)
+        }// Int로 떨어질 수 있는 환경인지 확인
+        
+        //print(result)
+        
+    }
+    
+    
+    
+    
+    
     //Name("TextEdited") 이 이름을 통해 신호를 받아서 셀렉터의 함수를 실행
     //addObserver가 신호를 받으면 뭘 실행을 해줄지 에드타겟과 유사
     @objc func notificationReceived(notification: NSNotification) {
@@ -61,12 +121,35 @@ class TransitionViewController: UIViewController {
     private func setupUI() {
         view.addSubview(centerButton)
         view.backgroundColor = .white
+        
+        
+        idTest()
+        
          
-        centerButton.setTitle("중앙 버튼", for: .normal)
-        centerButton.setTitleColor(.white, for: .normal)
-        centerButton.backgroundColor = .purple
-        centerButton.layer.cornerRadius = 8
-         
+        //extension UIButton
+        //extension UIViewController
+        //Custom View
+        //UIButton configuration : 위의 3가지 방법으로 활용 가능하지만 새로운 방법으로 해보자 :결국엔 익스텐션
+//        var config = UIButton.Configuration.filled() //버튼안에 Configuration구조체 :구조체 안에 내용을 바꿀꺼라 var로 설정
+//        config.title = "중앙 버튼"
+//        config.image = UIImage(systemName: "star.fill")
+//        //config.subtitle = "여기가 버튼입니다."
+//        config.baseBackgroundColor = .purple
+//        config.baseForegroundColor = .white
+//        config.cornerStyle = .capsule
+        
+        //위에걸 좀 다른 extension으로 업그레이드
+        centerButton.configuration = UIButton.Configuration.jackStyle(title: "중앙버튼")
+
+        //centerButton.configuration = config
+        
+        
+        //아래는 ios15이전에 사용한 default스타일의 버튼 코드. : 15이상부터 "UIButton configuration"
+//        centerButton.setTitle("중앙 버튼", for: .normal)
+//        centerButton.setTitleColor(.white, for: .normal)
+//        centerButton.backgroundColor = .purple
+//        centerButton.layer.cornerRadius = 8
+//         
         centerButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     

@@ -14,7 +14,7 @@ class NextCollectionViewCell: UICollectionViewCell {
     
     let imageView = UIImageView()
     
-    static var identifier = "NextCollectionViewCell"
+    //static var identifier = "NextCollectionViewCell"
     
     override init(frame: CGRect) {
         super.init(frame: frame)

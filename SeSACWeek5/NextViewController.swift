@@ -46,8 +46,6 @@ class NextViewController: UIViewController {
         collectionView.isPagingEnabled = true //넘길 때 셀이 정중앙에 위치하도록(셀을 디바이스 너비사이즈로): 여백이 없어야 잘됨: 컬렉션뷰가 디바이스 너비에 맞춰서 해줌
     }
     
-
-
 }
 extension NextViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

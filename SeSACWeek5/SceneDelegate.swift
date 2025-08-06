@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //scene가 옵셔널이 해제되면서 매개변수로 들어갈 수 있고
         window = UIWindow(windowScene: scene)
         
-        let nav = UINavigationController(rootViewController: TransitionViewController()) // 메인에서 네비컨 임베드했던 행위를 이렇게 코드로
+        let nav = UINavigationController(rootViewController: VerticalScrollViewController()) // 메인에서 네비컨 임베드했던 행위를 이렇게 코드로
         //root는 가장 밑에 확인해야 하는 첫화면 : "루트"뷰를 PhotoViewController()로 지정해주겠다.
         window?.rootViewController = nav
 

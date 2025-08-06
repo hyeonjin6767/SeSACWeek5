@@ -181,7 +181,7 @@ extension PhotoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if tableView == authorTableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: AuthorTableViewCell.identifier, for: indexPath) as! AuthorTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: AuthorTableViewCell.identifier, for: indexPath) as! AuthorTableViewCell //부모클래스를 자식클래스로 다운캐스팅 하고 사용했던것 :자식클래스꺼를 사용하려고
             let row = secondList[indexPath.row]
             cell.authorLabel.text = row.author
             return cell

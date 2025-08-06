@@ -35,9 +35,32 @@ class EditViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(rightButtonTapped))
         
         
+        
+        print(MyFont.allCases)
+        
+        
+        
+        //실제 폰트의 이름을 알아야해
+        for item in UIFont.familyNames {
+            
+            print(item) //기존에 내장된 폰트들이 출력 : 실제 폰트이름이 아님
+            
+            for name in UIFont.fontNames(forFamilyName: item) {
+                
+                print(">>>>>>>>>>>>>>>>", name) //폰트의 실제 이름 "S-CoreDream-9Block"
+                
+            }
+            
+        }
+        
+        
+        
         setupUI()
         setupConstraints()
         setupActions()
+        
+        
+        idTest()
         
         
         //textField1.text = "숫자 \(jack ?? 0)을 입력햇습니다."
@@ -62,10 +85,16 @@ class EditViewController: UIViewController {
         setupTextField(textField2, placeholder: "Closure 데이터")
         setupTextField(textField3, placeholder: "Notification 데이터")
          
-        setupButton(button1, title: "Delegate", color: .systemBlue)
-        setupButton(button2, title: "Closure", color: .systemGreen)
-        setupButton(button3, title: "Notification", color: .systemOrange)
-         
+        
+        
+        button1.configuration = UIButton.Configuration.jackStyle(title: "Delegate")
+        button2.configuration = UIButton.Configuration.jackStyle(title: "Closure")
+        button3.configuration = UIButton.Configuration.jackStyle(title: "Notification")
+        //아래 코드를 위처럼 변경
+//        setupButton(button1, title: "Delegate", color: .systemBlue)
+//        setupButton(button2, title: "Closure", color: .systemGreen)
+//        setupButton(button3, title: "Notification", color: .systemOrange)
+//         
         view.addSubview(textField1)
         view.addSubview(textField2)
         view.addSubview(textField3)
@@ -77,6 +106,14 @@ class EditViewController: UIViewController {
     private func setupTextField(_ textField: UITextField, placeholder: String) {
         textField.placeholder = placeholder
         textField.borderStyle = .roundedRect
+        
+        
+        //폰트를 적용해보자
+        //textField.font = UIFont(name: "SCDream5.otf", size: 20) //이렇게 쓰면 적용 안됨 : 실제 폰트의 이름을 알아야해
+        textField.font = UIFont(name: "S-CoreDream-9Black", size: 20)
+
+        
+        
         textField.font = UIFont.systemFont(ofSize: 16)
     }
     
